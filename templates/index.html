@@ -1,66 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Perro Aleatorio</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <meta charset="UTF-8">
+  <title>Perro Aleatorio</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
 </head>
+<style>
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+  </style>
+
 <body>
   <header>
     <nav>
-        <button id="like-button" title="Ver perros favoritos" class="like-button">
-            ❤️
-        </button>
-        <h1>Visor de Perros Aleatorios 🐶</h1>
+      <button id="like-button" title="Ver perros favoritos" class="like-button">
+        ❤️
+      </button>
+      <h1>Visor de Perros Aleatorios 🐶</h1>
     </nav>
   </header>
 
   <div id="favorites-popup" class="popup-overlay hidden">
-  <div class="popup-content">
-    <span class="close-popup">&times;</span>
-    <h2>Perros que te gustaron</h2>
-    <div id="liked-dogs-container">
-      <!-- Aquí irán las imágenes de los perros -->
+    <div class="popup-content">
+      <span class="close-popup">&times;</span>
+      <h2>Perros que te gustaron</h2>
+      <div id="liked-dogs-container">
+        <!-- Aquí irán las imágenes de los perros -->
+      </div>
     </div>
   </div>
-</div>
 
 
-    <main class="container">
+  <main class="container flex-column-center">
+    <div class="button-container">
       <form method="post" id="dogForm">
         <div ontouchstart="">
           <div class="main_button">
-            <a href="#" onclick="document.getElementById('dogForm').submit(); return false;">Random Dog</a>
+            <a href="#" onclick="document.getElementById('dogForm').submit(); return false;">Perro Aleatorio</a>
           </div>
         </div>
       </form>
+      <button class="icon-button like-button-style" title="Me gusta" id="like-dog-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" display="block">
+          <path
+            d="M7 3C4.239 3 2 5.216 2 7.95c0 2.207.875 7.445 9.488 12.74a.985.985 0 0 0 1.024 0C21.125 15.395 22 10.157 22 7.95 22 5.216 19.761 3 17 3s-5 3-5 3-2.239-3-5-3z" />
+        </svg>
+      </button>
+    </div>
 
-      {% if image_url %}
+    {% if image_url %}
 
-      <div class="card-list">
-        <article class="card">
-          <figure class="card-image" style="position: relative;">
-            <div id="loading-spinner" class="spinner"></div>
-            <img src="{{ image_url }}" alt="Perro aleatorio" id="dog-image">
-          </figure>
+    <div class="card-list flex-column-center">
 
-          <div class="card-header">
-            <a href="#">Raza: {{ raza|capitalize }}{% if subraza %} ({{ subraza|capitalize }}){% endif %}</a>
-            <button class="icon-button" title="Me gusta">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" display="block">
-                <path d="M7 3C4.239 3 2 5.216 2 7.95c0 2.207.875 7.445 9.488 12.74a.985.985 0 0 0 1.024 0C21.125 15.395 22 10.157 22 7.95 22 5.216 19.761 3 17 3s-5 3-5 3-2.239-3-5-3z" />
-              </svg>
-            </button>
-          </div>
-        </article>
-        </div>
+      <figure class="card-image figure-style">
+        <div id="loading-spinner" class="spinner"></div>
+        <img src="{{ image_url }}" alt="Perro aleatorio" id="dog-image" class="responsive-image">
+      </figure>
 
-        {% endif %}
+      <div class="card-header header-style">
+        <a class="breed-info">{{ raza|capitalize }}{% if subraza %} ({{ subraza|capitalize }}){% endif %}</a>
+      </div>
 
-    </main>
+    </div>
 
-</div>
+    {% endif %}
+
+  </main>
+
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
+
 </html>
